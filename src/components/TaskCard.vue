@@ -2,7 +2,6 @@
   <div :id="id"
         :class="[
       'relative rounded-xl p-4 backdrop-blur-md border',
-      'bg-yellow-50/70 border-yellow-200/50',
       'shadow-sm hover:shadow-md transition w-full lg:w-[20%] md:w-[30%]',
       cardColor
     ]">
@@ -11,6 +10,9 @@
     <div v-if="completed" class="flex items-center gap-2 text-xs uppercase tracking-widest">
       <p>completada</p>
       <i class="fa-solid fa-flag-checkered"></i>
+    </div>
+     <div v-else-if="mytask" class="flex items-center gap-2 text-xs uppercase tracking-widest">
+      
     </div>
     <div v-else-if="asigned" class="flex items-center gap-2 text-xs uppercase tracking-widest">
       <p>asignada</p>
@@ -31,6 +33,7 @@ const props = defineProps({
                 id:Number,
                 completed: {type: Boolean, default: false},
                 asigned: {type: Boolean, default: false},
+                mytask: Boolean,
                 text: String,
                 cardColor: {type: String, default: ''}
 

@@ -106,7 +106,7 @@
     </button>
 
     <IsVerifiedEmailMessage
-      v-if="check_user"
+      v-if="!usuario?.emailVerified"
       :message=" check_user ? 'Verificando el usuario' : 'Email de verificación enviado. Revisa tu correo y verifica tu cuenta para continuar.'"
     />
 
@@ -128,12 +128,14 @@ let password = ref('')
 let passwordConfirm = ref('')
 let cargando = ref(false)
 let email_sent = ref(false)
-let check_user = ref(true)
 
-setTimeout(()=>{
-  check_user.value = !usuario.value.emailVerified
-}, 1500)
-
+let check_user = computed(()=>{
+  if(usuario.value) {
+    return usuario.value.emailVerified
+  } else {
+    return false
+  }
+})
 
 let coinciden = computed(() => {
   return password.value == passwordConfirm.value

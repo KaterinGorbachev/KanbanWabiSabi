@@ -24,6 +24,12 @@
           class="w-full"
           @onclick="sendEmail"
         />
+        <ButtonBasic
+          label="Recarga la pagina"
+          class="w-full"
+          @onclick="reload"
+        />
+
       </div>
     </div>
   </Teleport>
@@ -44,6 +50,10 @@ const sendEmail = async ()=> {
       toast.error(email_enviado.mensaje, { timeout: 2500 })
     }
 
+}
+
+const reload = ()=>{
+  window.location.reload()
 }
 
 defineProps(

@@ -4,7 +4,8 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/login', component: () => import('@/views/LoginView.vue') },
-    { path: '/', component: () => import('@/views/HomeView.vue') }
+    { path: '/', component: () => import('@/views/HomeView.vue') },
+    { path: '/mykanban', component: () => import('@/views/Dashboard.vue') }
 
   ],
 })
