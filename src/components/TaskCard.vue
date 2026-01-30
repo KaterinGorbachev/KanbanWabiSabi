@@ -12,7 +12,7 @@
       <i class="fa-solid fa-flag-checkered"></i>
     </div>
      <div v-else-if="mytask" class="flex items-center gap-2 text-xs uppercase tracking-widest">
-      
+
     </div>
     <div v-else-if="asigned" class="flex items-center gap-2 text-xs uppercase tracking-widest">
       <p>asignada</p>
@@ -20,9 +20,9 @@
     </div>
     <div v-else class="flex items-center justify-between">
       <p class="text-xs uppercase tracking-widest opacity-70">pendente</p>
-      <button @click="emit('get', props)" class="text-xs px-3 py-1 rounded-md
-               bg-amber-50/70 border-amber-200/50
-               hover:bg-zinc-900 transition">comprometerse</button>
+      <button @click="emit('get', props)" class="text-xs px-3 py-2 rounded-md
+               bg-green-200/50
+               hover:bg-orange-200/50 transition cursor-pointer">comprometerse</button>
     </div>
   </div>
 

@@ -11,7 +11,7 @@
       :text="task.todo"
       :completed="task.completed"
       :asigned="isTaskAssigned(task.id)"
-      :card-color= "task.completed ? 'bg-rose-50/70 border-rose-200/50' : (isTaskAssigned(task.id) ? 'bg-white/30 border-green-200/50' : 'bg-yellow-50/70 border-yellow-200/50') "
+      :card-color= "task.completed ? 'bg-rose-50/70 border-rose-200/50' : (isTaskAssigned(task.id) ? 'bg-white/30 border-green-200/50' : 'bg-white border-orange-200/50')"
 
       @get="getTask"
 
