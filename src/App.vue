@@ -1,11 +1,14 @@
 <script setup></script>
 
 <template>
-  <h1>You did it!</h1>
+  <h1>Kanban Managment Board</h1>
   <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
+    Este tablero es un espacio tranquilo para tu trabajo. Las tareas se mueven con suavidad, desde
+    el inicio hasta el final y el descanso. Fluye en equilibrio con el río del tiempo y disfruta de
+    tu trabajo; no dejes que las imperfecciones te perturben.
   </p>
+
+  <RouterView/>
 </template>
 
 <style scoped></style>
