@@ -1,5 +1,16 @@
 <template>
+
   <section>
+    <header>
+    <h1>Kanban Managment Board</h1>
+    <p>
+      Este tablero es un espacio tranquilo para tu trabajo. Las tareas se mueven con suavidad, desde
+      el inicio hasta el final y el descanso. Fluye en equilibrio con el río del tiempo y disfruta de
+      tu trabajo; no dejes que las imperfecciones te perturben.
+    </p>
+    <br><br>
+    <p>Inisia sesión para empezar</p>
+  </header>
     <div v-if="loginToggle">
       <!--Login div-->
       <h2>Inicia sessión</h2>
@@ -107,6 +118,8 @@ import { ref, computed, onMounted } from 'vue'
 import { usuario, registrar, login, enviarEmailVerificacion } from '@/services/authFirebase'
 import { useToast } from 'vue-toastification'
 import IsVerifiedEmailMessage from '@/components/IsVerifiedEmailMessage.vue'
+
+
 
 const toast = useToast()
 let loginToggle = ref(true)

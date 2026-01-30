@@ -3,13 +3,13 @@ import { defineStore } from "pinia";
 
 import axios from "axios";
 
-export const useDatosFromAPIStore = defineStore('apiProductos', () => {
+export const useGetDataApi = defineStore('apiProductos', () => {
   const tareas = ref()
   const getData = async () => {
     const result = await axios.get('https://dummyjson.com/todos')
-    tareas.value = result.todos
+    tareas.value = result.data.todos
 
   }
 
-  return { personajes, getData }
+  return { tareas, getData }
 })
