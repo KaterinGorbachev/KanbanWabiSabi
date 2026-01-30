@@ -18,6 +18,7 @@
       </div>
     </header>
     <main class="flex flex-wrap gap-[2rem]">
+      <p v-if="myKanban.length == 0">No tienes las tareas asignadas todavia</p>
       <TaskCard
       v-for="task in myKanban" :key="task.id"
       :id="task.id"

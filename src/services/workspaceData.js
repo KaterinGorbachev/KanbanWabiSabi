@@ -45,13 +45,21 @@ export const guardarPerfilUsuario = async (uid, table, tarea) => {
 export const obtenerPerfilUsuario = async (usuarioID, table) => {
   try {
     const docRef = doc(db, table, usuarioID)
-
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) {
       return {
         ok: true,
         mensaje: 'Datos ha obtenido correctamente',
         perfil: { id: docSnap.id, ...docSnap.data() },
+      }
+    } else {
+      return {
+        ok: true,
+        mensaje: 'Usuario sin perfil todavía',
+        perfil: {
+          id: usuarioID,
+          tareasAsigned: [],
+        },
       }
     }
   } catch (error) {
