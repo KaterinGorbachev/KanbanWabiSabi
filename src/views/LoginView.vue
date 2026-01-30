@@ -33,7 +33,8 @@
           </div>
         </div>
 
-        <button type="sumbit">Iniciar sessión</button>
+        <button type="sumbit">{{ cargando ? 'En proceso...' : 'Iniciar sesión' }}</button>
+
       </form>
     </div>
     <div v-else>
@@ -92,25 +93,39 @@
     <button @click="loginToggle = !loginToggle">
       {{ loginToggle ? 'Ir a Register' : 'Ir a Login' }}
     </button>
+
+    <IsVerifiedEmailMessage
+      v-if="check_user"
+      :message=" check_user ? 'Verificando el usuario' : 'Email de verificación enviado. Revisa tu correo y verifica tu cuenta para continuar.'"
+    />
+
   </section>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { usuario, registrar, login, enviarEmailVerificacion } from '@/services/authFirebase'
 import { useToast } from 'vue-toastification'
+import IsVerifiedEmailMessage from '@/components/IsVerifiedEmailMessage.vue'
 
 const toast = useToast()
-
 let loginToggle = ref(true)
 let email = ref('')
 let password = ref('')
 let passwordConfirm = ref('')
+let cargando = ref(false)
+let email_sent = ref(false)
+let check_user = ref(true)
+
+setTimeout(()=>{
+  check_user.value = !usuario.value.emailVerified
+}, 1500)
+
+
 let coinciden = computed(() => {
   return password.value == passwordConfirm.value
 })
 
-let cargando = ref(false)
 
 const registerUser = async () => {
   if (!coinciden.value) {
@@ -126,13 +141,48 @@ const registerUser = async () => {
     cargando.value = false
 
     let userData = result.usuario.user
-    let email_enviado_result = await enviarEmailVerificacion(userData) {
-
+    let email_enviado_result = await enviarEmailVerificacion(userData)
+    if (email_enviado_result.ok) {
+      //toast.success(email_enviado_result.mensaje, { timeout: 2500 })
+      email_sent.value = true
+    } else {
+      toast.error(email_enviado_result.mensaje, { timeout: 2500 })
     }
-
+  }
+  else {
+    cargando.value = false
+    toast.error(result.mensaje, { timeout: 2500 })
 
   }
+
 }
+
+
+const loginUser = async()=> {
+  const result = await login(email.value, password.value)
+  cargando.value = true
+  if (result.ok) {
+    toast.success(result.mensaje, { timeout: 2500 })
+    email.value = ''
+    password.value = ''
+    cargando.value = false
+  }
+  else {
+    cargando.value = false
+    toast.error(result.mensaje, { timeout: 2500 })
+
+  }
+
+}
+
+
+onMounted(()=>{
+  setTimeout(()=>{
+    console.log(usuario.value);
+  }, 2500)
+})
+
+
 </script>
 
 <style></style>

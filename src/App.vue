@@ -8,7 +8,7 @@
     tu trabajo; no dejes que las imperfecciones te perturben.
   </p>
 
-  <RouterView/>
+  <RouterView />
 </template>
 
 <style scoped></style>
