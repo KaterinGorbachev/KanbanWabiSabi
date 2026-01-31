@@ -97,3 +97,35 @@ export const getAllTasks = async () => {
     }
   }
 }
+
+
+// Save task color to Firebase by updating the task in tareasAsigned array
+export const updateTaskColor = async (uid, table, taskId, backgroundColor) => {
+  try {
+    const docRef = doc(db, table, uid)
+    const docSnap = await getDoc(docRef)
+    
+    if (!docSnap.exists()) {
+      return { ok: false, error: 'User profile not found' }
+    }
+    
+    const tareasAsigned = docSnap.data().tareasAsigned || []
+    
+    // Find and update the task with matching id
+    const updatedTareas = tareasAsigned.map(tarea => 
+      tarea.id === taskId 
+        ? { ...tarea, backgroundColor }
+        : tarea
+    )
+    
+    await updateDoc(docRef, {
+      tareasAsigned: updatedTareas,
+      updatedAt: new Date()
+    })
+    
+    return { ok: true, mensaje: 'Color actualizado correctamente' }
+  } catch (error) {
+    console.error('[WORKSPACEDATA][UPDATE_COLOR]', error)
+    return { ok: false, error: mapFirebaseError(error) }
+  }
+}

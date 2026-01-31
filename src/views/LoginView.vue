@@ -1,9 +1,9 @@
 <template>
   <section
-    class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4] p-[3rem] min-h-screen w-full"
+    class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4]  min-h-screen w-full"
   >
     <div
-      class="flex flex-col justify-start items-start w-full sm:w-full md:w-[50%] lg:w-[40%] bg-drop-blur bg-white/40 px-[2rem] sm:px-[3rem] py-2 min-h-screen gap-[2rem]"
+      class="flex flex-col justify-start items-start w-full sm:w-full md:w-[50%] lg:w-[40%] bg-drop-blur bg-white/40 px-[2rem] sm:px-[3rem] py-[3rem] min-h-screen gap-[2rem]"
     >
       <header class="w-full text-start flex flex-col gap-1">
         <h1 class="text-3xl text-amber-950 font-[Zen_Maru_Gothic] font-bold">Kanban Wabi Sabi</h1>

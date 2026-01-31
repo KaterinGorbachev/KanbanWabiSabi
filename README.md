@@ -199,7 +199,7 @@ We appreciate [Japanese artists](https://experience-japan.info) for sharing Japa
 - [x] Core Kanban board functionality
 - [x] Firebase authentication
 - [x] Task filtering and management
-- [ ] Profile personalization
+- [x] Profile personalization
 - [ ] Team collaboration features (comments, mentions)
 - [ ] Internationalization (i18n)
 - [ ] Performance optimizations and analytics

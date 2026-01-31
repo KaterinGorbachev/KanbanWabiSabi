@@ -2,11 +2,29 @@
   <div
     :id="id"
     :class="[
-      'relative rounded-xl p-4 backdrop-blur-md border',
+      'relative rounded-xl px-7 py-4 backdrop-blur-md border',
       'transition w-full lg:w-[20%] md:w-[30%]',
-      cardColor,
+      !mytask ? cardColor : 'border-amber-200/50',
     ]"
+    :style="mytask && currentColor ? { backgroundColor: currentColor, opacity: '0.9' } : {}"
   >
+    <div v-if="mytask">
+      <input
+        type="color"
+        class="absolute top-2 right-2 w-6 h-6 cursor-pointer opacity-70 hover:opacity-100"
+        :value="currentColor"
+        @input="onColorInput"
+        list="zen-colors"
+      />
+      <datalist id="zen-colors">
+        <option value="#FFFBEB" />
+        <option value="#FDE68A" />
+        <option value="#FBCFE8" />
+        <option value="#DCFCE7" />
+        <option value="#bddde9" />
+      </datalist>
+    </div>
+
     <p
       :class="[
         'text-sm font-medium tracking-wide mb-3',
@@ -54,9 +72,13 @@ const props = defineProps({
   text: String,
   cardColor: { type: String, default: '' },
   disable: { type: Boolean, default: false },
+  currentColor: { type: String, default: '#FFFBEB' },
 })
 
-const emit = defineEmits(['get'])
+const emit = defineEmits(['get', 'color-change'])
+const onColorInput = (e) => {
+  emit('color-change', props.id, e.target.value)
+}
 </script>
 
 <style></style>
