@@ -2,8 +2,8 @@
   <section
     class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4] p-[3rem] min-h-screen w-full"
   >
-    <header class="sticky top-0 z-50 py-2 flex justify-between">
-      <router-link to="/" class="flex gap-2 items-center justify-center"
+    <header class="sticky top-0 z-50 py-2 flex flex-row-reverse justify-between">
+      <router-link to="/" class="flex flex-row-reverse gap-2 items-center justify-center"
         ><div
           class="w-[50px] h-[50px] rounded-[50%] border-2 border-[#fff] bg-[url('/N_night-view.svg')] bg-contain bg-no-repeat bg-center bg-[#693c00]"
         ></div>
@@ -11,7 +11,7 @@
           Ir a Managment Board
         </p>
       </router-link>
-      <div class="flex gap-2 items-center justify-center">
+      <div class="flex gap-2 items-center justify-center flex-row-reverse">
         <label
           for="logout"
           class="text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block cursor-pointer"
@@ -58,6 +58,7 @@
                 : task.backgroundColor || 'bg-white/90 border-amber-200/50'
             "
             @color-change="handleColorChange"
+            @complete="completedTask"
           />
         </div>
 
@@ -68,7 +69,7 @@
 
 <script setup>
 import { usuario } from '@/services/authFirebase'
-import { obtenerPerfilUsuario, updateTaskColor } from '@/services/workspaceData'
+import { obtenerPerfilUsuario, updateTaskColor, updateTaskCompletedStatus } from '@/services/workspaceData'
 import ButtonBasic from '@/components/ButtonBasic.vue'
 import TaskCard from '@/components/TaskCard.vue'
 import { ref, watch } from 'vue'
@@ -98,6 +99,23 @@ const handleColorChange = async (taskId, newColor) => {
     toast.error('Failed to update color')
     // Reload tasks to sync with server
     await getKanban()
+  }
+}
+
+const completedTask = async (taskId) => {
+  try {
+    const task = myKanban.value.find((t) => t.id === taskId)
+    if (task) {
+      task.completed = true
+    }
+    // Optionally, persist this change to the database if needed
+    await updateTaskCompletedStatus(usuario.value.uid, 'tareas', taskId, true, false)
+    toast.success('Tarea marcada como completada', { timeout: 1500 })
+  } catch (error) {
+    console.error('Failed to complete task:', error)
+    toast.error('Failed to complete task')
+    await getKanban()
+
   }
 }
 

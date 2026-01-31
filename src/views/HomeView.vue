@@ -62,7 +62,7 @@
           :card-color="
             task.completed
               ? 'bg-rose-500/20 border-rose-500/50 '
-              : isTaskAssigned(task.id)
+              : isTaskCompleted(task.id) ? 'bg-rose-500/20 border-rose-500/50 ' : isTaskAssigned(task.id)
                 ? 'bg-white/30 border-green-200/50'
                 : assignedTasks.some((id) => id == task.id)
                   ? 'bg-green-900/50 border-green-900'
@@ -98,6 +98,10 @@ const selectedFilter = ref('')
 
 const isTaskAssigned = (taskId) => {
   return todasTareas.value.some((user) => user.tareasAsigned.some((t) => t.id === taskId))
+}
+
+const isTaskCompleted = (taskId) => {
+  return todasTareas.value.some((user) => user.tareasAsigned.some((t) => t.id === taskId && t.completed))
 }
 
 const getTask = async (tarea) => {
