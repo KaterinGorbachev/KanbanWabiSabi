@@ -78,7 +78,7 @@ export const enviarEmailVerificacion = async (usuarioActual = null) => {
     }
 
     await sendEmailVerification(user, {
-      url: `${window.location.origin}/workspace`,
+      url: `${window.location.origin}/mykanban`,
     })
 
     return {
@@ -107,7 +107,7 @@ export const logout = async () => {
 
     return {
       ok: false,
-      mensaje: 'No se pudo cerrar sesión',
+      mensaje: 'No se pudo cerrar sesión. Prueba más tarde, por favor.',
     }
   }
 }

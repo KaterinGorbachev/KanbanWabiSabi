@@ -26,7 +26,6 @@ export const mapAuthError = (error) => {
   }
 }
 
-
 export const mapFirebaseError = (error) => {
   switch (error.code) {
     case 'permission-denied':

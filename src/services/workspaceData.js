@@ -9,7 +9,7 @@ import {
   getDocs,
   collection,
   updateDoc,
-  arrayUnion
+  arrayUnion,
 } from 'firebase/firestore'
 
 import { mapFirebaseError } from './firebaseErrors'
@@ -21,16 +21,15 @@ export const guardarPerfilUsuario = async (uid, table, tarea) => {
   try {
     // 🔹 Try to update first
     await updateDoc(docRef, {
-      tareasAsigned: arrayUnion(tarea)
+      tareasAsigned: arrayUnion(tarea),
     })
 
     return { ok: true, mensaje: 'Tarea asignada correctamente' }
-
   } catch (error) {
     // If doc does not exist → create it
     if (error.code === 'not-found') {
       await setDoc(docRef, {
-        tareasAsigned: [tarea]
+        tareasAsigned: [tarea],
       })
 
       return { ok: true, mensaje: 'Perfil creado y tarea asignada' }
@@ -40,7 +39,6 @@ export const guardarPerfilUsuario = async (uid, table, tarea) => {
     return { ok: false, mensaje: mapFirebaseError(error) }
   }
 }
-
 
 export const obtenerPerfilUsuario = async (usuarioID, table) => {
   try {
@@ -72,11 +70,10 @@ export const obtenerPerfilUsuario = async (usuarioID, table) => {
   }
 }
 
-
-export const getAllTasks = async()=> {
+export const getAllTasks = async () => {
   try {
     let tareas = []
-    const querySnapshot = await getDocs(collection(db, "tareas"));
+    const querySnapshot = await getDocs(collection(db, 'tareas'))
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       // doc.id user.uid
@@ -84,20 +81,19 @@ export const getAllTasks = async()=> {
       //console.log(doc.data());
       tareas.push({
         uid: doc.id,
-        ...doc.data()
+        ...doc.data(),
       })
-    });
+    })
     return {
-        ok: true,
-        mensaje: 'Todas tareas',
-        data: tareas,
-      }
-
+      ok: true,
+      mensaje: 'Todas tareas',
+      data: tareas,
+    }
   } catch (error) {
     console.log('Ha habido un problema', error.code, error)
     return {
       ok: false,
-      code: error.code
+      code: error.code,
     }
   }
 }

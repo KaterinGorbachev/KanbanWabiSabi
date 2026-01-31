@@ -1,19 +1,14 @@
 <template>
-  <button @click="emit('onclick')">{{ label }}</button>
+  <button @click="emit('onclick')" :class="classes">{{ label }}</button>
 </template>
 
 <script setup>
-defineProps(
-  {
-    label: String,
-
-  }
-)
+defineProps({
+  label: String,
+  classes: String,
+})
 
 const emit = defineEmits(['onclick'])
-
 </script>
 
-<style>
-
-</style>
+<style></style>
