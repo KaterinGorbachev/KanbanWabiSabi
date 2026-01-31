@@ -51,10 +51,10 @@
       <p v-if="tareasApi?.length == 0" class="text-white text-shadow-emerald-950 font-bold text-xl">
         No hay tareas con el filtro seleccionado
       </p>
-      <div class="flex flex-wrap gap-[2rem] ps-2 pe-9">
-        <TaskCard
-          v-for="task in tareasApi"
-          :key="task.id"
+      <div class="flex flex-wrap gap-[2rem] ps-2 pe-9 w-full ">
+        <div class="flex md:w-[30%] lg:w-[20%]" v-for="task in tareasApi"
+          :key="task.id">
+          <TaskCard
           :id="task.id"
           :text="task.todo"
           :completed="task.completed"
@@ -71,6 +71,9 @@
           :disable="assignedTasks.some((id) => id == task.id)"
           @get="getTask"
         />
+
+        </div>
+
       </div>
     </main>
   </section>

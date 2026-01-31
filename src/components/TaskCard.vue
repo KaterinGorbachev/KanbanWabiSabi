@@ -3,7 +3,7 @@
     :id="id"
     :class="[
       'relative rounded-xl px-7 py-4 backdrop-blur-md border',
-      'transition w-full lg:w-[20%] md:w-[30%]',
+      'transition w-full ',
       !mytask ? cardColor : 'border-amber-200/50',
     ]"
     :style="mytask && currentColor ? { backgroundColor: currentColor, opacity: '0.9' } : {}"
@@ -49,7 +49,7 @@
       <p class="text-green-900">asignada</p>
       <i class="fa-solid fa-user text-green-900"></i>
     </div>
-    <div v-else class="flex items-center justify-between">
+    <div v-else class="flex flex-col items-start justify-evenly gap-2">
       <p class="text-xs uppercase tracking-widest opacity-70">pendiente</p>
       <button
         @click="emit('get', props)"

@@ -43,22 +43,24 @@
       </div>
       <p v-if="myKanban.length == 0">No tienes las tareas asignadas todavia</p>
       <div class="flex flex-wrap gap-[2rem]">
-        <TaskCard
-          v-for="task in myKanban"
-          :key="task.id"
-          :id="task.id"
-          :text="task.text"
-          :completed="task.completed"
-          :asigned="false"
-          :mytask="true"
-          :currentColor="task.backgroundColor || '#FFFBEB'"
-          :card-color="
-            task.completed
-              ? 'bg-rose-50/70 border-rose-200/50'
-              : task.backgroundColor || 'bg-white/90 border-amber-200/50'
-          "
-          @color-change="handleColorChange"
-        />
+        <div class="flex md:w-[30%] lg:w-[20%]" v-for="task in myKanban"
+          :key="task.id">
+          <TaskCard
+            :id="task.id"
+            :text="task.text"
+            :completed="task.completed"
+            :asigned="false"
+            :mytask="true"
+            :currentColor="task.backgroundColor || '#FFFBEB'"
+            :card-color="
+              task.completed
+                ? 'bg-rose-50/70 border-rose-200/50'
+                : task.backgroundColor || 'bg-white/90 border-amber-200/50'
+            "
+            @color-change="handleColorChange"
+          />
+        </div>
+
       </div>
     </main>
   </section>
