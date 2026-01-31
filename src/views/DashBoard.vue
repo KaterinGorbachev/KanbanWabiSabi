@@ -1,24 +1,22 @@
 <template>
   <section
-    class="flex flex-col bg-[url('/public/background.jpg')] lg:bg-no-repeat lg:bg-cover md:bg-no-repeat md:bg-cover bg-center gap-4 p-[3rem] min-h-screen"
+    class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4] p-[3rem] min-h-screen w-full"
   >
-    <header class="sticky top-0 z-50 px-2 py-2 flex justify-between">
+    <header class="sticky top-0 z-50 py-2 flex justify-between">
+      <router-link
+        to="/"
+        class="flex gap-2 items-center justify-center"
+        ><div class="w-[50px] h-[50px] rounded-[50%] border-2 border-[#fff] bg-[url('/N_night-view.svg')] bg-contain bg-no-repeat bg-center bg-[#693c00]"></div>
+        <p class="text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block"> Ir a Managment Board </p>
+      </router-link>
       <div class="flex gap-2 items-center justify-center">
-        <router-link
-          to="/"
-          class="w-[60px] h-[60px] rounded-[50%] border-2 border-amber-800 bg-[url('/undraw_scrum-board_7bgh.svg')] bg-center bg-no-repeat bg-center bg-contain bg-amber-50"
-        ></router-link>
-        <p class="text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block"> Ir a Managment Board
-
-        </p>
-      </div>
-      <div class="flex gap-2 items-center justify-center">
-        <p class="text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block">
+        <label for="logout" class="text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block cursor-pointer">
           Log out
-        </p>
+        </label>
         <ButtonBasic
+          id="logout"
           @onclick="userLogout"
-          classes="w-[60px] h-[60px] rounded-[50%] border-2 border-amber-100 bg-[url('/undraw_log-out_2vod.svg')] bg-center bg-no-repeat bg-center bg-contain cursor-pointer bg-amber-50"
+          classes="w-[40px] h-[40px] rounded-[50%] border-2 border-[#cc5c00c7] bg-[url('/P_tomb-emperor-nintoku.svg')] bg-center bg-no-repeat bg-center bg-cover cursor-pointer bg-amber-50"
         />
       </div>
     </header>

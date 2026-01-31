@@ -1,6 +1,6 @@
 <template>
   <section
-    class="flex flex-col gap-[1rem] bg-[url('/public/background.jpg')] bg-repeat sm:bg-no-repeat sm:bg-cover md:bg-no-repeat md:bg-cover lg:bg-no-repeat lg:bg-cover bg-center min-h-screen w-full"
+    class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4] p-[3rem] min-h-screen w-full"
   >
     <div
       class="flex flex-col justify-start items-start w-full sm:w-full md:w-[50%] lg:w-[40%] bg-drop-blur bg-white/40 px-[2rem] sm:px-[3rem] py-2 min-h-screen gap-[2rem]"
