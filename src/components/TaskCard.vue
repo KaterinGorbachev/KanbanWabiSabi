@@ -7,19 +7,32 @@
       cardColor,
     ]"
   >
-    <p class="text-sm font-medium tracking-wide mb-3">{{ text }}</p>
+    <p
+      :class="[
+        'text-sm font-medium tracking-wide mb-3',
+        completed
+          ? 'text-gray-600'
+          : asigned
+            ? 'text-green-900'
+            : mytask
+              ? 'text-amber-900'
+              : 'text-amber-900',
+      ]"
+    >
+      {{ text }}
+    </p>
 
     <div v-if="completed" class="flex items-center gap-2 text-xs uppercase tracking-widest">
-      <p>completada</p>
-      <i class="fa-solid fa-flag-checkered"></i>
+      <p class="text-gray-600">completada</p>
+      <i class="fa-solid fa-flag-checkered text-gray-600"></i>
     </div>
     <div v-else-if="mytask" class="flex items-center gap-2 text-xs uppercase tracking-widest"></div>
     <div v-else-if="asigned" class="flex items-center gap-2 text-xs uppercase tracking-widest">
-      <p>asignada</p>
-      <i class="fa-solid fa-user"></i>
+      <p class="text-green-900">asignada</p>
+      <i class="fa-solid fa-user text-green-900"></i>
     </div>
     <div v-else class="flex items-center justify-between">
-      <p class="text-xs uppercase tracking-widest opacity-70">pendente</p>
+      <p class="text-xs uppercase tracking-widest opacity-70">pendiente</p>
       <button
         @click="emit('get', props)"
         :disabled="disable"

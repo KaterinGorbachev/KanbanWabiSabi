@@ -8,8 +8,8 @@
           to="/"
           class="w-[60px] h-[60px] rounded-[50%] border-2 border-amber-800 bg-[url('/undraw_scrum-board_7bgh.svg')] bg-center bg-no-repeat bg-center bg-contain bg-amber-50"
         ></router-link>
-        <p class="text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block">
-          Explorar todas las tareas
+        <p class="text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block"> Ir a Managment Board
+
         </p>
       </div>
       <div class="flex gap-2 items-center justify-center">
@@ -25,9 +25,10 @@
 
     <main class="flex flex-col justify-between gap-6">
       <div class="flex flex-col justify-between gap-1">
-        <h1 class="text-3xl text-amber-950">Wabi Sabi Board</h1>
-        <h2>¡Bienvinido de nuevo, {{ usuario?.email }}!</h2>
-        <p>Aquí puede ver todas su tareas.</p>
+        <h1 class="text-3xl text-amber-950 text-shadow-emerald-950 font-[Zen_Maru_Gothic] font-bold">Wabi Sabi Board</h1>
+        <h2 class="text-white text-shadow-emerald-950 text-xl font-bold">¡Bienvinido de nuevo, {{ usuario?.email }}!</h2>
+        <p class="text-white text-shadow-emerald-950">Fluye en equilibrio con el río del tiempo y disfruta de tu trabajo; no dejes que las
+          imperfecciones te perturben.</p>
       </div>
       <p v-if="myKanban.length == 0">No tienes las tareas asignadas todavia</p>
       <div class="flex flex-wrap gap-[2rem]">
@@ -42,7 +43,7 @@
           :card-color="
             task.completed
               ? 'bg-rose-50/70 border-rose-200/50'
-              : 'bg-green-50/70 border-green-200/50'
+              : 'bg-white/90 border-amber-200/50'
           "
         />
       </div>

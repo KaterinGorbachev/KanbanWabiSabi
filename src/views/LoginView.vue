@@ -1,28 +1,25 @@
 <template>
   <section
-    class="flex flex-col gap-[4rem] bg-[url('/public/background.jpg')] lg:bg-no-repeat lg:bg-cover md:bg-no-repeat md:bg-cover bg-center min-h-screen"
+    class="flex flex-col gap-[1rem] bg-[url('/public/background.jpg')] bg-repeat sm:bg-no-repeat sm:bg-cover md:bg-no-repeat md:bg-cover lg:bg-no-repeat lg:bg-cover bg-center min-h-screen w-full"
   >
     <div
-      class="flex flex-col justify-start items-start w-full lg:w-[40%] bg-drop-blur bg-white/40 px-[3rem] py-2 min-h-screen gap-[2rem]"
+      class="flex flex-col justify-start items-start w-full sm:w-full md:w-[50%] lg:w-[40%] bg-drop-blur bg-white/40 px-[2rem] sm:px-[3rem] py-2 min-h-screen gap-[2rem]"
     >
       <header class="w-full text-start flex flex-col gap-1">
-        <h1 class="text-3xl text-amber-950">Kanban Wabi Sabi</h1>
-        <p class="text-sm text-gray-950">
+        <h1 class="text-3xl text-amber-950 font-[Zen_Maru_Gothic] font-bold">Kanban Wabi Sabi</h1>
+        <p class="text-sm text-amber-900/60">
           Es un espacio tranquilo para tu trabajo. Las tareas se mueven con suavidad, desde el
-          inicio hasta el final y el descanso. Fluye en equilibrio con el río del tiempo y disfruta
-          de tu trabajo; no dejes que las imperfecciones te perturben.
+          inicio hasta el final y el descanso. Inisia sesión para empezar.
         </p>
-        <br /><br />
-        <p class="text-md text-amber-950">Inisia sesión para empezar</p>
       </header>
       <div v-if="loginToggle" class="flex flex-col gap-6">
         <!--Login div-->
         <h2 class="text-2xl text-amber-950">Inicia sessión</h2>
-        <form @submit.prevent="loginUser" class="flex flex-col gap-4">
+        <form @submit.prevent="loginUser" class="flex flex-col gap-4 w-full">
           <div>
             <label for="email" class="text-[1rem] text-amber-950">Email</label>
             <div
-              class="flex items-center justify-center gap-1 text-amber-900 bg-amber-100 px-3 py-1 rounded-md"
+              class="flex items-center justify-center gap-1 text-amber-900 bg-amber-100 px-3 py-1 rounded-md w-full"
             >
               <i class="fa-solid fa-envelope"></i>
               <input
@@ -56,7 +53,7 @@
 
           <button
             type="sumbit"
-            class="bg-blue-200 rounded-md cursor-pointer text-amber-950 hover:bg-green-200 px-6 py-2"
+            class="bg-blue-200 rounded-md cursor-pointer text-amber-950 hover:bg-green-200 px-6 py-2 mt-4"
           >
             {{ cargando ? 'En proceso...' : 'Iniciar sesión' }}
           </button>
@@ -122,7 +119,7 @@
 
           <button
             type="sumbit"
-            class="bg-blue-200 rounded-md cursor-pointer text-amber-950 hover:bg-green-200 px-6 py-2"
+            class="bg-blue-200 rounded-md cursor-pointer text-amber-950 hover:bg-green-200 px-6 py-2 mt-4"
           >
             {{ cargando ? 'En proceso...' : 'Registrarse' }}
           </button>
@@ -130,7 +127,7 @@
       </div>
 
       <div class="flex flex-col lg:flex-row gap-1 items-center justify-center">
-        <p class="italic text-grey-200 text-sm">
+        <p class="italic text-amber-900 text-sm">
           {{ loginToggle ? 'Si no tiene cuenta' : 'Si tiene cuenta' }}
         </p>
 
