@@ -2,7 +2,10 @@
 
 **Kanban Wabi Sabi** is a modern, minimalist Digital Workspace application for managing tasks with Kanban boards. Despite the popularity of Scrum methods and the increasing complexity of Kanban boards, we wanted to return to simple Kanban signals and use color to distinguish the priority or category of tasks.
 
-Deployed on Vercel: https://kanbanwabisabi.vercel.app/
+Deployed on Vercel: [Kanban Wabi Sabi](https://kanbanwabisabi.vercel.app/)
+Account to test it: 
+ - email: qawithkaty@gmail.com
+ - password: test123
 
 ## Table of Contents
 
