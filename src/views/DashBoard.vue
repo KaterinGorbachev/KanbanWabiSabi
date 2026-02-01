@@ -66,7 +66,7 @@
             <button
               v-if="selectedColorFilter"
               @click="selectedColorFilter = ''"
-              class="mt-3 w-full text-xs px-2 py-2 rounded-md border border-amber-800 bg-transparent hover:bg-amber-100 text-amber-900 transition"
+              class="mt-3 w-full text-xs px-2 py-2 rounded-md border border-amber-800 bg-transparent hover:bg-amber-100 text-amber-900 transition cursor-pointer"
             >
               Limpiar filtro
             </button>
