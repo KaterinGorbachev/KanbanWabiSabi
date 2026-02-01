@@ -2,7 +2,7 @@
   <section
     class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4] py-[3rem] px-[2rem] min-h-screen w-full"
   >
-    <header class="sticky top-0 z-40 py-3 flex items-center gap-4 justify-between">
+    <header class="fixed right-0 top-6 left-0 z-50 p-9 w-full flex items-center justify-between">
       <h1 class="text-xl sm:text-3xl text-amber-950 font-[Zen_Maru_Gothic] font-bold">
         Kanban Managment Board
       </h1>
@@ -15,7 +15,7 @@
         ></div>
       </router-link>
     </header>
-    <main class="flex flex-col gap-4 items-start w-full">
+    <main class="flex flex-col gap-4 items-start w-full relative mt-20">
       <div class="flex flex-col justify-between gap-1 w-full">
         <div class="flex flex-col px-4 items-end fixed top-50 right-4 z-50 py-4">
           <div class="flex gap-2 items-center justify-center relative">

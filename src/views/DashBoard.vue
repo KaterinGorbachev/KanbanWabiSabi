@@ -2,8 +2,14 @@
   <section
     class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4] py-[3rem] px-[2rem] min-h-screen w-full"
   >
-    <header class="fixed right-9 top-6 z-50 py-2 flex flex-col gap-[2rem] justify-between w-full items-end">
-      <router-link to="/" class="flex flex-row-reverse gap-2 items-center justify-center"
+    <header class="fixed right-0 left-0 top-6 z-50 p-9 flex flex-col gap-[2rem] justify-end w-full items-end">
+      <div class="flex w-full justify-between items-center">
+        <h1
+          class="text-xl sm:text-3xl text-amber-950 text-shadow-emerald-950 font-[Zen_Maru_Gothic] font-bold"
+        >
+          Wabi Sabi Board
+        </h1>
+        <router-link to="/" class="flex flex-row-reverse gap-2 items-center justify-center"
         ><div
           class="w-[50px] h-[50px] rounded-[50%] border-2 border-amber-50 bg-[url('/N_night-view.svg')] bg-contain bg-no-repeat bg-center bg-[#cc5c00c7]"
         ></div>
@@ -11,6 +17,9 @@
           Ir a Managment Board
         </p>
       </router-link>
+
+      </div>
+
       <div class="flex gap-2 items-center justify-center flex-row">
         <label
           for="logout"
@@ -26,10 +35,10 @@
       </div>
     </header>
 
-    <main class="flex flex-col justify-between gap-4 w-full items-start">
+    <main class="flex flex-col justify-between gap-4 w-full items-start relative mt-20">
       <!-- Color Filter -->
       <div class="flex flex-col justify-between gap-1 w-full">
-        <div class="flex flex-col px-4 items-end fixed top-50 right-4 z-20 py-4 pointer-events-none">
+        <div class="flex flex-col px-4 items-end fixed top-50 right-0 z-20 pointer-events-none">
           <div class="flex gap-2 items-center justify-center relative p-4 pointer-events-auto">
             <label
               for="color-filter"
@@ -46,9 +55,9 @@
           </div>
           <div
             v-if="colorFilterVisible"
-            class="mt-2 bg-amber-50 border border-amber-800 rounded-md shadow-md absolute right-0 top-15 p-4 pointer-events-auto"
+            class="mt-3 bg-white border-2 border-amber-800 rounded-lg shadow-lg absolute right-4 top-16 p-4 w-48 pointer-events-auto"
           >
-            <p class="text-amber-900 font-medium mb-3">Filtrar por color:</p>
+            <p class="text-amber-900 font-semibold mb-3 text-sm">Filtrar por color:</p>
             <input
               type="color"
               value="#7D2E00"
@@ -73,11 +82,7 @@
           </div>
         </div>
 
-        <h1
-          class="text-xl sm:text-3xl text-amber-950 text-shadow-emerald-950 font-[Zen_Maru_Gothic] font-bold"
-        >
-          Wabi Sabi Board
-        </h1>
+
         <h2 class="text-white text-shadow-emerald-950 text-[16px] sm:text-xl font-bold">
           ¡Bienvinido de nuevo, {{ usuario?.email }}!
         </h2>
