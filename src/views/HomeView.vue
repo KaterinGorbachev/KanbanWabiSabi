@@ -3,23 +3,23 @@
     class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4] py-[3rem] px-[2rem] min-h-screen w-full"
   >
     <header
-      class="sticky top-0 z-40 py-3 flex flex-col items-center gap-4 lg:flex-row justify-between"
+      class="sticky top-0 z-40 py-3 flex flex-col items-center gap-4 lg:flex-row justify-start"
     >
-      <h1 class="text-[16px] sm:text-3xl text-amber-950 font-[Zen_Maru_Gothic] font-bold">
+      <h1 class="text-xl sm:text-3xl text-amber-950 font-[Zen_Maru_Gothic] font-bold">
         Kanban Managment Board
       </h1>
-      <router-link to="/mykanban" class="flex gap-2 items-center justify-center">
+      <router-link to="/mykanban" class="flex flex-row-reverse gap-2 items-center justify-center">
         <p class="text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block">
           Ir a mi Kanban
         </p>
         <div
-          class="w-[40px] h-[40px] rounded-[50%] border-2 border-[#cc5c00c7] bg-[url('/C_rakugo.svg')] bg-no-repeat bg-center bg-cover bg-amber-50 p-1"
+          class="w-[50px] h-[50px] rounded-[50%] border-2 border-[#cc5c00c7] bg-[url('/C_rakugo.svg')] bg-no-repeat bg-center bg-cover bg-amber-50 p-1"
         ></div>
       </router-link>
     </header>
     <main class="flex flex-col gap-4 items-start w-full">
-      <div class="flex flex-col w-full items-end sticky top-20 z-40 p-4">
-        <div class="flex gap-2 items-center justify-center relative p-4">
+      <div class="flex flex-col w-full items-end fixed right-6 top-40 z-40">
+        <div class="flex gap-2 items-center justify-center relative">
           <label
             for="filter"
             class="cursor-pointer text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block"
@@ -28,7 +28,7 @@
           </label>
           <button
             id="filter"
-            class="w-[30px] h-[30px] rounded-[50%] border-2 border-amber-800 bg-[url('')] bg-no-repeat bg-center bg-contain bg-amber-800 cursor-pointer transition hover:bg-emerald-300 hover:border-emerald-300"
+            class="w-[30px] h-[30px] rounded-[50%] border-2 border-amber-800 bg-no-repeat bg-center bg-contain bg-amber-800 cursor-pointer transition hover:bg-emerald-300 hover:border-emerald-300"
             @click="selectVisible = !selectVisible"
           ></button>
         </div>
@@ -51,29 +51,26 @@
       <p v-if="tareasApi?.length == 0" class="text-white text-shadow-emerald-950 font-bold text-xl">
         No hay tareas con el filtro seleccionado
       </p>
-      <div class="flex flex-wrap gap-[2rem] ps-2 pe-9 w-full ">
-        <div class="flex md:w-[30%] lg:w-[20%]" v-for="task in tareasApi"
-          :key="task.id">
+      <div class="flex flex-wrap gap-[2rem] ps-2 pe-12 w-full">
+        <div class="flex md:w-[30%] lg:w-[20%] w-full" v-for="task in tareasApi" :key="task.id">
           <TaskCard
-          :id="task.id"
-          :text="task.todo"
-          :completed="task.completed"
-          :asigned="isTaskAssigned(task.id)"
-          :card-color="
-            task.completed
-              ? 'bg-rose-500/20 border-rose-500/50 '
-              : isTaskCompleted(task.id) ? 'bg-rose-500/20 border-rose-500/50 ' : isTaskAssigned(task.id)
-                ? 'bg-white/30 border-green-200/50'
-                : assignedTasks.some((id) => id == task.id)
-                  ? 'bg-green-900/50 border-green-900'
-                  : 'bg-white border-orange-200/50 shadow-md hover:scale-[1.05]'
-          "
-          :disable="assignedTasks.some((id) => id == task.id)"
-          @get="getTask"
-        />
-
+            :id="task.id"
+            :text="task.todo"
+            :completed="task.completed"
+            :asigned="isTaskAssigned(task.id)"
+            :card-color="
+              task.completed
+                ? 'bg-rose-500/20 border-rose-500/50 '
+                : isTaskAssigned(task.id)
+                  ? 'bg-white/30 border-green-200/50'
+                  : assignedTasks.some((id) => id == task.id)
+                    ? 'bg-green-900/50 border-green-900'
+                    : 'bg-white border-orange-200/50 shadow-md hover:scale-[1.05]'
+            "
+            :disable="assignedTasks.some((id) => id == task.id)"
+            @get="getTask"
+          />
         </div>
-
       </div>
     </main>
   </section>
@@ -81,7 +78,7 @@
 
 <script setup>
 import { useGetDataApi } from '@/stores/getDataApi'
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { guardarPerfilUsuario, getAllTasks } from '@/services/workspaceData'
 import TaskCard from '@/components/TaskCard.vue'
 import { useToast } from 'vue-toastification'
@@ -90,7 +87,18 @@ import { usuario } from '@/services/authFirebase'
 let selectVisible = ref(false)
 
 let todasTareas = ref([])
-let tareasApi = ref([])
+let tareasApi = computed(() => {
+  const filter = selectedFilter.value
+  if (filter === 'completed') {
+    return tareasStore.tareas.filter((task) => task.completed === true)
+  } else if (filter === 'assigned') {
+    return tareasStore.tareas.filter((task) => isTaskAssigned(task.id))
+  } else if (filter === 'pending') {
+    return tareasStore.tareas.filter((task) => !isTaskAssigned(task.id) && task.completed === false)
+  } else {
+    return tareasStore.tareas
+  }
+})
 const toast = useToast()
 const tareasStore = useGetDataApi()
 const assignedTasks = ref([])
@@ -100,9 +108,9 @@ const isTaskAssigned = (taskId) => {
   return todasTareas.value.some((user) => user.tareasAsigned.some((t) => t.id === taskId))
 }
 
-const isTaskCompleted = (taskId) => {
+/* const isTaskCompleted = (taskId) => {
   return todasTareas.value.some((user) => user.tareasAsigned.some((t) => t.id === taskId && t.completed))
-}
+} */
 
 const getTask = async (tarea) => {
   let result = await guardarPerfilUsuario(usuario.value.uid, 'tareas', tarea)
@@ -116,27 +124,8 @@ const getTask = async (tarea) => {
   }
 }
 
-watch(
-  selectedFilter,
-  (newFilter) => {
-    if (newFilter === 'completed') {
-      tareasApi.value = tareasStore.tareas.filter((task) => task.completed === true)
-    } else if (newFilter === 'assigned') {
-      tareasApi.value = tareasStore.tareas.filter((task) => isTaskAssigned(task.id))
-    } else if (newFilter === 'pending') {
-      tareasApi.value = tareasStore.tareas.filter(
-        (task) => !isTaskAssigned(task.id) && task.completed === false,
-      )
-    } else {
-      tareasApi.value = tareasStore.tareas
-    }
-  },
-  { immediate: true },
-)
-
 onMounted(async () => {
   await tareasStore.getData()
-  tareasApi.value = tareasStore.tareas
 
   let dbanswer = await getAllTasks()
   if (dbanswer.ok) {

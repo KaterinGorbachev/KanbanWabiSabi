@@ -1,6 +1,8 @@
 # Digital Workspace
 
-**Kanban Wabi Sabi** is a modern, minimalist Digital Workspace application for managing tasks with Scrum methodologies and Kanban boards. 
+**Kanban Wabi Sabi** is a modern, minimalist Digital Workspace application for managing tasks with Kanban boards. Despite the popularity of Scrum methods and the increasing complexity of Kanban boards, we wanted to return to simple Kanban signals and use color to distinguish the priority or category of tasks.
+
+Deployed on Vercel: https://kanbanwabisabi.vercel.app/
 
 ## Table of Contents
 
