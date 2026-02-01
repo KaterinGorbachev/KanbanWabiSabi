@@ -1,11 +1,11 @@
 <template>
   <section
-    class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4] p-[3rem] min-h-screen w-full"
+    class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4] py-[3rem] px-[2rem] min-h-screen w-full"
   >
-    <header class="sticky top-0 z-50 py-2 flex flex-row justify-between">
-      <router-link to="/" class="flex flex-row gap-2 items-center justify-center"
+    <header class="fixed right-9 top-6 z-50 py-2 flex flex-col gap-[2rem] justify-between w-full items-end">
+      <router-link to="/" class="flex flex-row-reverse gap-2 items-center justify-center"
         ><div
-          class="w-[50px] h-[50px] rounded-[50%] border-2 border-[#fff] bg-[url('/N_night-view.svg')] bg-contain bg-no-repeat bg-center bg-[#693c00]"
+          class="w-[50px] h-[50px] rounded-[50%] border-2 border-amber-50 bg-[url('/N_night-view.svg')] bg-contain bg-no-repeat bg-center bg-[#cc5c00c7]"
         ></div>
         <p class="text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block">
           Ir a Managment Board
@@ -28,9 +28,9 @@
 
     <main class="flex flex-col justify-between gap-4 w-full items-start">
       <!-- Color Filter -->
-      <div class="flex flex-col justify-between gap-1">
-        <div class="flex flex-col w-full items-end fixed top-40 right-4 z-40 p-4">
-          <div class="flex gap-2 items-center justify-center relative p-4">
+      <div class="flex flex-col justify-between gap-1 w-full">
+        <div class="flex flex-col px-4 items-end fixed top-50 right-4 z-20 py-4 pointer-events-none">
+          <div class="flex gap-2 items-center justify-center relative p-4 pointer-events-auto">
             <label
               for="color-filter"
               class="cursor-pointer text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block"
@@ -46,7 +46,7 @@
           </div>
           <div
             v-if="colorFilterVisible"
-            class="mt-2 bg-amber-50 border border-amber-800 rounded-md shadow-md absolute right-0 top-15 p-4"
+            class="mt-2 bg-amber-50 border border-amber-800 rounded-md shadow-md absolute right-0 top-15 p-4 pointer-events-auto"
           >
             <p class="text-amber-900 font-medium mb-3">Filtrar por color:</p>
             <input
@@ -81,7 +81,7 @@
         <h2 class="text-white text-shadow-emerald-950 text-[16px] sm:text-xl font-bold">
           ¡Bienvinido de nuevo, {{ usuario?.email }}!
         </h2>
-        <p class="text-white text-shadow-emerald-950 text-[14px] sm:text-md">
+        <p class="text-white text-shadow-emerald-950 text-[14px] sm:text-md font-medium max-w-[80%]">
           Fluye en equilibrio con el río del tiempo y disfruta de tu trabajo; no dejes que las
           imperfecciones te perturben.
         </p>
@@ -112,6 +112,7 @@
                 : task.backgroundColor || 'bg-white/90 border-amber-200/50'
             "
             @color-change="handleColorChange"
+            @complete="deleteTask"
           />
         </div>
       </div>
@@ -122,9 +123,10 @@
 <script setup>
 import { usuario } from '@/services/authFirebase'
 import {
+  deleteTaskFromUser,
   obtenerPerfilUsuario,
   updateTaskColor,
-  updateTaskCompletedStatus,
+
 } from '@/services/workspaceData'
 import ButtonBasic from '@/components/ButtonBasic.vue'
 import TaskCard from '@/components/TaskCard.vue'
@@ -171,21 +173,24 @@ const handleColorChange = async (taskId, newColor) => {
   }
 }
 
-const completedTask = async (taskId) => {
+const deleteTask = async (taskId) => {
   try {
-    const task = myKanban.value.find((t) => t.id === taskId)
-    if (task) {
-      task.completed = true
-    }
-    // Optionally, persist this change to the database if needed
-    await updateTaskCompletedStatus(usuario.value.uid, 'tareas', taskId, true, false)
-    toast.success('Tarea marcada como completada', { timeout: 1500 })
+    // 1. Update local state immediately (optimistic update)
+    myKanban.value = myKanban.value.filter((task) => task.id !== taskId)
+
+    // 2. Persist to database
+    await deleteTaskFromUser(usuario.value.uid, 'tareas', taskId)
+    toast.success('Tarea eliminada correctamente', { timeout: 1500 })
   } catch (error) {
-    console.error('Failed to complete task:', error)
-    toast.error('Failed to complete task')
+    // Revert on error
+    console.error('Failed to delete task:', error)
+    toast.error('No se pudo eliminar la tarea')
+    // Reload tasks to sync with server
     await getKanban()
   }
 }
+
+
 
 const userLogout = async () => {
   let result = await logout()

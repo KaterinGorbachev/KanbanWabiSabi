@@ -62,7 +62,7 @@ const sendEmail = async () => {
 }
 
 const reload = () => {
-  router.push('/')
+  window.location.reload()
 }
 
 defineProps({

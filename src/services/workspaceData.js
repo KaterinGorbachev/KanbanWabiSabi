@@ -172,3 +172,30 @@ export const updateMainTaskCompletedStatus = async (taskId, completed) => {
     return { ok: false, error: mapFirebaseError(error) }
   }
 }
+
+// Delete task from user's tareasAsigned collection
+export const deleteTaskFromUser = async (uid, table, taskId) => {
+  try {
+    const docRef = doc(db, table, uid)
+    const docSnap = await getDoc(docRef)
+
+    if (!docSnap.exists()) {
+      return { ok: false, error: 'User profile not found' }
+    }
+
+    const tareasAsigned = docSnap.data().tareasAsigned || []
+
+    // Filter out the task with matching id
+    const updatedTareas = tareasAsigned.filter((tarea) => tarea.id !== taskId)
+
+    await updateDoc(docRef, {
+      tareasAsigned: updatedTareas,
+      updatedAt: new Date(),
+    })
+
+    return { ok: true, mensaje: 'Tarea eliminada correctamente' }
+  } catch (error) {
+    console.error('[WORKSPACEDATA][DELETE_TASK]', error)
+    return { ok: false, error: mapFirebaseError(error) }
+  }
+}

@@ -45,7 +45,7 @@
       <i class="fa-solid fa-flag-checkered text-gray-600"></i>
     </div>
     <div v-else-if="mytask" class="flex items-center gap-2 text-xs uppercase tracking-widest">
-      <!-- <button @click="emit('complete', props.id)" class="text-xs px-3 py-2 rounded-md border transition cursor-pointer  border-amber-800 hover:bg-amber-300/50">completada</button> -->
+      <button @click="emit('complete', props.id)" class="text-xs px-3 py-2 rounded-md border transition cursor-pointer  border-amber-800 hover:bg-amber-300/50">eliminar</button>
     </div>
     <div v-else-if="asigned" class="flex items-center gap-2 text-xs uppercase tracking-widest">
       <p class="text-green-900">asignada</p>

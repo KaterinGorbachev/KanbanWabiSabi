@@ -2,13 +2,11 @@
   <section
     class="flex flex-col gap-[2rem] bg-[url('/background.jpg')] bg-cover bg-no-repeat bg-[#FAE8B4] py-[3rem] px-[2rem] min-h-screen w-full"
   >
-    <header
-      class="sticky top-0 z-40 py-3 flex flex-col items-center gap-4 lg:flex-row justify-start"
-    >
+    <header class="sticky top-0 z-40 py-3 flex items-center gap-4 justify-between">
       <h1 class="text-xl sm:text-3xl text-amber-950 font-[Zen_Maru_Gothic] font-bold">
         Kanban Managment Board
       </h1>
-      <router-link to="/mykanban" class="flex flex-row-reverse gap-2 items-center justify-center">
+      <router-link to="/mykanban" class="flex gap-2 items-center justify-center">
         <p class="text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block">
           Ir a mi Kanban
         </p>
@@ -18,34 +16,36 @@
       </router-link>
     </header>
     <main class="flex flex-col gap-4 items-start w-full">
-      <div class="flex flex-col w-full items-end fixed right-6 top-40 z-40">
-        <div class="flex gap-2 items-center justify-center relative">
-          <label
-            for="filter"
-            class="cursor-pointer text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block"
+      <div class="flex flex-col justify-between gap-1 w-full">
+        <div class="flex flex-col px-4 items-end fixed top-50 right-4 z-50 py-4">
+          <div class="flex gap-2 items-center justify-center relative">
+            <label
+              for="color-filter"
+              class="cursor-pointer text-xs text-amber-800 tracking-widest writing-mode-vertical hidden sm:block"
+            >
+              Filtrar
+            </label>
+            <button
+              id="color-filter"
+              class="w-[30px] h-[30px] rounded-[50%] border-2 bg-amber-900 border-[#7D2E00] bg-no-repeat bg-center bg-contain cursor-pointer transition hover:bg-emerald-300 hover:border-emerald-300"
+              @click="selectVisible = !selectVisible"
+            ></button>
+          </div>
+          <div
+            v-if="selectVisible"
+            class="mt-3 bg-white border-2 border-amber-800 rounded-lg shadow-lg absolute right-0 top-16 p-4 w-48 pointer-events-auto"
           >
-            Filtrar
-          </label>
-          <button
-            id="filter"
-            class="w-[30px] h-[30px] rounded-[50%] border-2 border-amber-800 bg-no-repeat bg-center bg-contain bg-amber-800 cursor-pointer transition hover:bg-emerald-300 hover:border-emerald-300"
-            @click="selectVisible = !selectVisible"
-          ></button>
-        </div>
-        <div
-          v-if="selectVisible"
-          class="mt-2 bg-amber-50 border border-amber-800 rounded-md shadow-md absolute right-0 top-15 p-2"
-        >
-          <p class="text-amber-900 font-medium mb-2">Filtrar tareas por estado:</p>
-          <select
-            v-model="selectedFilter"
-            class="border border-amber-800 rounded-md p-2 w-full outline-amber-800"
-          >
-            <option value="">Todas</option>
-            <option value="completed">Completadas</option>
-            <option value="assigned">Asignadas</option>
-            <option value="pending">Pendientes</option>
-          </select>
+            <p class="text-amber-900 font-semibold mb-3 text-sm">Filtrar tareas:</p>
+            <select
+              v-model="selectedFilter"
+              class="border-2 border-amber-800 rounded-md p-2 w-full outline-none focus:border-amber-900 bg-amber-50 text-amber-900 font-medium"
+            >
+              <option value="">Todas</option>
+              <option value="completed">Completadas</option>
+              <option value="assigned">Asignadas</option>
+              <option value="pending">Pendientes</option>
+            </select>
+          </div>
         </div>
       </div>
       <p v-if="tareasApi?.length == 0" class="text-white text-shadow-emerald-950 font-bold text-xl">
@@ -117,6 +117,12 @@ const getTask = async (tarea) => {
   if (result.ok) {
     assignedTasks.value.push(tarea.id)
     console.log(assignedTasks.value)
+
+    // Refresh the users collection to reflect the new assignment
+    let dbanswer = await getAllTasks()
+    if (dbanswer.ok) {
+      todasTareas.value = dbanswer.data
+    }
 
     toast.success(result.mensaje, { timeout: 1500 })
   } else {
